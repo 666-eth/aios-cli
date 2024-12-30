@@ -1,5 +1,12 @@
 # aiOS CLI
 
+### shell
+
+```shell
+wget -O ai.sh https://raw.githubusercontent.com/666-eth/aios-cli/refs/heads/main/ai.sh && chmod +x ai.sh && ./ai.sh
+```
+
+
 ## Overview
 
 `aios-cli` is a command-line interface to access similar functionalities as the [aiOS desktop app](https://aios.network/). The CLI is a nicer UX if you're a developer and tend to stay in the terminal or would like to run a node on servers as this does not require a desktop environment to run.
