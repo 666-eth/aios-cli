@@ -104,3 +104,10 @@ while true; do
 done
 
 echo "完成所有命令！"
+
+/root/.aios/aios-cli hive points
+
+/root/.aios/aios-cli hive whoami
+
+
+
