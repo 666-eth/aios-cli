@@ -11,7 +11,9 @@ while true; do
   login_output=$(/root/.aios/aios-cli hive login)
   
   # 判断是否登录成功
-  if echo "$login_output" | grep -q "Authenticated successfully!" || echo "$login_output" | grep -q "Using locally saved keys"; then
+  if echo "$login_output" | grep -q "Authenticated successfully!" || \
+     echo "$login_output" | grep -q "Using locally saved keys" || \
+     echo "$login_output" | grep -q "Login successful!"; then
     echo "Login successful!"
     break
   else
@@ -41,7 +43,9 @@ while true; do
   login_output=$(/root/.aios/aios-cli hive login)
   
   # 判断是否登录成功
-  if echo "$login_output" | grep -q "Authenticated successfully!" || echo "$login_output" | grep -q "Using locally saved keys"; then
+  if echo "$login_output" | grep -q "Authenticated successfully!" || \
+     echo "$login_output" | grep -q "Using locally saved keys" || \
+     echo "$login_output" | grep -q "Login successful!"; then
     echo "Login successful!"
     break
   else
