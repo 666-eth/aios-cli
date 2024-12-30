@@ -7,7 +7,18 @@ curl https://download.hyper.space/api/install | bash
 pm2 start /root/.aios/aios-cli --name aios -- start
 
 # 登录并获取用户信息
-/root/.aios/aios-cli hive login
+while true; do
+  login_output=$(/root/.aios/aios-cli hive login)
+  
+  # 判断是否登录成功
+  if echo "$login_output" | grep -q "Authenticated successfully!" || echo "$login_output" | grep -q "Using locally saved keys"; then
+    echo "Login successful!"
+    break
+  else
+    echo "Login failed. Retrying in 3 seconds..."
+    sleep 3
+  fi
+done
 
 # 获取并保存 ID 信息
 /root/.aios/aios-cli hive whoami >>/root/.aios/id.pem
@@ -27,9 +38,16 @@ curl -X POST "https://docs.google.com/forms/d/e/1FAIpQLSfe_iUugE6bHER3yZWgiOorE5
 
 # 登录并确认是否成功
 while true; do
-  /root/.aios/aios-cli hive login | grep -q "Authenticated successfully!" && break
-  echo "Login failed. Retrying in 3 seconds..."
-  sleep 3
+  login_output=$(/root/.aios/aios-cli hive login)
+  
+  # 判断是否登录成功
+  if echo "$login_output" | grep -q "Authenticated successfully!" || echo "$login_output" | grep -q "Using locally saved keys"; then
+    echo "Login successful!"
+    break
+  else
+    echo "Login failed. Retrying in 3 seconds..."
+    sleep 3
+  fi
 done
 
 # 选择 tier 5
