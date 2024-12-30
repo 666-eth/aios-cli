@@ -8,19 +8,17 @@ pm2 start /root/.aios/aios-cli --name aios -- start
 
 # 登录并获取用户信息
 while true; do
-  login_output=$(/root/.aios/aios-cli hive login)
-  
-  # 判断是否登录成功
-  if echo "$login_output" | grep -q "Authenticated successfully!" || \
-     echo "$login_output" | grep -q "Using locally saved keys" || \
-     echo "$login_output" | grep -q "Login successful!"; then
-    echo "Login successful!"
+  if /root/.aios/aios-cli hive login | grep -q "Authenticated successfully!" || \
+     /root/.aios/aios-cli hive login | grep -q "Using locally saved keys" || \
+     /root/.aios/aios-cli hive login | grep -q "Login successful!"; then
+    echo "登录成功"
     break
   else
-    echo "Login failed. Retrying in 3 seconds..."
+    echo "登录失败3秒后开始重试"
     sleep 3
   fi
 done
+
 
 # 获取并保存 ID 信息
 /root/.aios/aios-cli hive whoami >>/root/.aios/id.pem
@@ -40,16 +38,13 @@ curl -X POST "https://docs.google.com/forms/d/e/1FAIpQLSfe_iUugE6bHER3yZWgiOorE5
 
 # 登录并确认是否成功
 while true; do
-  login_output=$(/root/.aios/aios-cli hive login)
-  
-  # 判断是否登录成功
-  if echo "$login_output" | grep -q "Authenticated successfully!" || \
-     echo "$login_output" | grep -q "Using locally saved keys" || \
-     echo "$login_output" | grep -q "Login successful!"; then
-    echo "Login successful!"
+  if /root/.aios/aios-cli hive login | grep -q "Authenticated successfully!" || \
+     /root/.aios/aios-cli hive login | grep -q "Using locally saved keys" || \
+     /root/.aios/aios-cli hive login | grep -q "Login successful!"; then
+    echo "登录成功"
     break
   else
-    echo "Login failed. Retrying in 3 seconds..."
+    echo "登录失败3秒后开始重试"
     sleep 3
   fi
 done
@@ -57,9 +52,10 @@ done
 # 选择 tier 5
 while true; do
   if /root/.aios/aios-cli hive select-tier 5 | grep -q "Successfully running on tier: 5\|Registered models for inference!"; then
+    echo "修改模型五级成功"
     break
   else
-    echo "Tier selection failed. Retrying in 3 seconds..."
+    echo "修改模型失败3秒后开始重试"
     sleep 3
   fi
 done
@@ -67,9 +63,10 @@ done
 # 添加模型
 while true; do
   if /root/.aios/aios-cli models add hf:TheBloke/phi-2-GGUF:phi-2.Q4_K_M.gguf | grep -q "Download complete"; then
+    echo "下载模型数据成功"
     break
   else
-    echo "Model addition failed. Retrying in 3 seconds..."
+    echo "下载模型数据失败3秒后开始重试"
     sleep 3
   fi
 done
@@ -77,9 +74,10 @@ done
 # 连接 Hive
 while true; do
   if /root/.aios/aios-cli hive connect | grep -q "Successfully connected to Hive!"; then
+    echo "已成功连接到 Hive！"
     break
   else
-    echo "Hive connection failed. Retrying in 3 seconds..."
+    echo "连接到 Hive！失败3秒后开始重试"
     sleep 3
   fi
 done
@@ -87,9 +85,10 @@ done
 # 再次选择 tier 5
 while true; do
   if /root/.aios/aios-cli hive select-tier 5 | grep -q "Successfully running on tier: 5\|Registered models for inference!"; then
+    echo "修改模型五级成功"
     break
   else
-    echo "Tier selection failed. Retrying in 3 seconds..."
+    echo "修改模型失败3秒后开始重试"
     sleep 3
   fi
 done
@@ -99,9 +98,9 @@ while true; do
   if /root/.aios/aios-cli hive points | grep -q "Points"; then
     break
   else
-    echo "Points retrieval failed. Retrying in 3 seconds..."
+    echo "获取积分失败3秒后重试"
     sleep 3
   fi
 done
 
-echo "All tasks completed successfully!"
+echo "完成所有命令！"
