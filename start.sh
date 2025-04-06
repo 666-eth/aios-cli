@@ -88,3 +88,5 @@ while true; do
     sleep 3
   fi
 done
+
+tail -f /dev/null
